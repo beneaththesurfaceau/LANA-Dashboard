@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Australian Childhood Homelessness Mortality Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --bg-card-hover: #1a1a25;
+            --text-primary: #f5f5f7;
+            --text-secondary: #8a8a9a;
+            --text-muted: #5a5a6a;
+            --accent-red: #e53935;
+            --accent-red-dark: #b71c1c;
+            --accent-amber: #ff8f00;
+            --accent-blue: #1e88e5;
+            --border-subtle: rgba(255,255,255,0.06);
+            --gradient-red: linear-gradient(135deg, #e53935 0%, #ff6f00 100%);
+            --shadow-heavy: 0 25px 50px -12px rgba(0,0,0,0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 4rem 0 3rem;
+            position: relative;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 2px;
+            background: var(--gradient-red);
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(229, 57, 53, 0.15);
+            color: var(--accent-red);
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(229, 57, 53, 0.3);
+        }
+
+        h1 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Live Counter Section */
+        .live-counter-section {
+            margin: 4rem 0;
+        }
+
+        .live-counter-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .live-counter-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-red);
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-red);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .pulse {
+            width: 10px;
+            height: 10px;
+            background: var(--accent-red);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .counter-label {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.5rem;
+        }
+
+        .counter-value {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: clamp(5rem, 12vw, 10rem);
+            font-weight: 400;
+            color: var(--text-primary);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .counter-decimal {
+            font-size: 0.4em;
+            color: var(--accent-red);
+        }
+
+        .counter-context {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .counter-context strong {
+            color: var(--text-secondary);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .stat-icon.red { background: rgba(229, 57, 53, 0.15); }
+        .stat-icon.amber { background: rgba(255, 143, 0, 0.15); }
+        .stat-icon.blue { background: rgba(30, 136, 229, 0.15); }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-change {
+            font-size: 0.85rem;
+            color: var(--accent-red);
+        }
+
+        .stat-change.positive {
+            color: #4caf50;
+        }
+
+        /* Year by Year Table */
+        .yearly-section {
+            margin: 4rem 0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .section-title {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.75rem;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .table-wrapper {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: rgba(255,255,255,0.03);
+        }
+
+        th {
+            padding: 1.25rem 1.5rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        td {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .year-cell {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+        }
+
+        .estimate-cell {
+            font-weight: 600;
+            color: var(--accent-red);
+            font-size: 1.1rem;
+        }
+
+        .range-cell {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .current-year {
+            background: rgba(229, 57, 53, 0.05);
+        }
+
+        .current-badge {
+            display: inline-block;
+            background: var(--accent-red);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+
+        /* Breakdown Section */
+        .breakdown-section {
+            margin: 4rem 0;
+        }
+
+        .breakdown-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .breakdown-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .breakdown-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .breakdown-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .breakdown-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .breakdown-value {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.75rem;
+            color: var(--accent-amber);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-red);
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        /* Methodology Link */
+        .methodology-link {
+            text-align: center;
+            margin: 4rem 0 2rem;
+            padding: 3rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+        }
+
+        .methodology-link h3 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .methodology-link p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--gradient-red);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(229, 57, 53, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            border-top: 1px solid var(--border-subtle);
+            margin-top: 4rem;
+        }
+
+        .footer-note {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .data-sources {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .data-sources a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        .data-sources a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            header {
+                padding: 2rem 0;
+            }
+
+            .live-counter-card {
+                padding: 2rem 1.5rem;
+            }
+
+            th, td {
+                padding: 1rem;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* Animation */
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .fade-in:nth-child(1) { animation-delay: 0.1s; }
+        .fade-in:nth-child(2) { animation-delay: 0.2s; }
+        .fade-in:nth-child(3) { animation-delay: 0.3s; }
+        .fade-in:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            cursor: help;
+            border-bottom: 1px dotted var(--text-muted);
+        }
+
+        .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            z-index: 100;
+        }
+
+        .tooltip:hover::after {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="badge">Research-Based Estimates</div>
+            <h1>Australian Childhood<br>Homelessness Mortality</h1>
+            <p class="subtitle">Real-time estimates of child deaths attributable to homelessness and housing instability, based on multi-pathway mortality modelling.</p>
+        </header>
+
+        <!-- Live Counter -->
+        <section class="live-counter-section fade-in">
+            <div class="live-counter-card">
+                <div class="live-indicator">
+                    <span class="pulse"></span>
+                    LIVE ESTIMATE
+                </div>
+                <div class="counter-label">Estimated Deaths This Year (2026)</div>
+                <div class="counter-value" id="liveCounter">0<span class="counter-decimal" id="decimal">.00</span></div>
+                <div class="counter-context">
+                    Based on <strong>169 deaths/year</strong> central estimate &bull; Updated every second<br>
+                    <span class="tooltip" data-tooltip="95% confidence interval based on sensitivity analysis">Range: 89 – 251 deaths/year</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Stats -->
+        <section class="stats-grid">
+            <div class="stat-card fade-in">
+                <div class="stat-icon red">📊</div>
+                <div class="stat-label">Official Count (AIHW)</div>
+                <div class="stat-value">~39</div>
+                <div class="stat-change">deaths/year linked to SHS</div>
+            </div>
+            <div class="stat-card fade-in">
+                <div class="stat-icon amber">⚠️</div>
+                <div class="stat-label">Undercount Factor</div>
+                <div class="stat-value">4.3×</div>
+                <div class="stat-change">official data captures only 23%</div>
+            </div>
+            <div class="stat-card fade-in">
+                <div class="stat-icon blue">👶</div>
+                <div class="stat-label">Hidden Homeless Children</div>
+                <div class="stat-value">~147K</div>
+                <div class="stat-change">2.5% of Australian children</div>
+            </div>
+        </section>
+
+        <!-- Year by Year -->
+        <section class="yearly-section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Year-by-Year Estimates</h2>
+                    <p class="section-subtitle">Adjusted for population growth and housing crisis intensification</p>
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Central Estimate</th>
+                            <th>Range (95% CI)</th>
+                            <th>Child Population</th>
+                            <th>Rate per 100K</th>
+                        </tr>
+                    </thead>
+                    <tbody id="yearlyTable">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Breakdown by Pathway -->
+        <section class="breakdown-section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Deaths by Pathway (2026 Estimate)</h2>
+                    <p class="section-subtitle">Multi-pathway mortality model breakdown</p>
+                </div>
+            </div>
+            <div class="breakdown-grid">
+                <div class="breakdown-card fade-in">
+                    <div class="breakdown-header">
+                        <div>
+                            <div class="breakdown-title">Visible (Linkage-Adjusted)</div>
+                            <div class="breakdown-subtitle">SHS-connected deaths with data linkage correction</div>
+                        </div>
+                        <div class="breakdown-value">52</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 31%;"></div>
+                    </div>
+                </div>
+                <div class="breakdown-card fade-in">
+                    <div class="breakdown-header">
+                        <div>
+                            <div class="breakdown-title">Adolescent Suicide/Overdose</div>
+                            <div class="breakdown-subtitle">Hidden homeless youth (12-17) without service contact</div>
+                        </div>
+                        <div class="breakdown-value">57</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 34%;"></div>
+                    </div>
+                </div>
+                <div class="breakdown-card fade-in">
+                    <div class="breakdown-header">
+                        <div>
+                            <div class="breakdown-title">SUDI in Hidden Homeless</div>
+                            <div class="breakdown-subtitle">Infant deaths in overcrowded/unstable housing</div>
+                        </div>
+                        <div class="breakdown-value">17</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 10%;"></div>
+                    </div>
+                </div>
+                <div class="breakdown-card fade-in">
+                    <div class="breakdown-header">
+                        <div>
+                            <div class="breakdown-title">Accident/Illness (1-11 Hidden)</div>
+                            <div class="breakdown-subtitle">Children in hidden homelessness lacking healthcare</div>
+                        </div>
+                        <div class="breakdown-value">25</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 15%;"></div>
+                    </div>
+                </div>
+                <div class="breakdown-card fade-in">
+                    <div class="breakdown-header">
+                        <div>
+                            <div class="breakdown-title">FDV-Related Deaths</div>
+                            <div class="breakdown-subtitle">Children killed where housing barriers prevented escape</div>
+                        </div>
+                        <div class="breakdown-value">10</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 6%;"></div>
+                    </div>
+                </div>
+                <div class="breakdown-card fade-in">
+                    <div class="breakdown-header">
+                        <div>
+                            <div class="breakdown-title">Unlinked Deaths</div>
+                            <div class="breakdown-subtitle">Deaths occurring &gt;12 months after last SHS contact</div>
+                        </div>
+                        <div class="breakdown-value">8</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 5%;"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Methodology Link -->
+        <section class="methodology-link">
+            <h3>Understanding the Methodology</h3>
+            <p>Our multi-pathway mortality model is based on AIHW data, academic research, and actuarial risk estimation methods.</p>
+            <a href="methodology.html" class="btn">
+                Read Full Methodology Report
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p class="footer-note">
+                <strong>Important:</strong> These are statistical estimates based on available data and established mortality modelling methods. 
+                They highlight the gap between officially recorded deaths and the likely true toll of childhood homelessness in Australia.
+                Individual circumstances vary significantly.
+            </p>
+            <p class="data-sources">
+                Data Sources: <a href="https://www.aihw.gov.au" target="_blank">AIHW</a> &bull; 
+                <a href="https://www.abs.gov.au" target="_blank">ABS</a> &bull; 
+                <a href="https://www.ahuri.edu.au" target="_blank">AHURI</a> &bull;
+                <a href="https://homelessnessaustralia.org.au" target="_blank">Homelessness Australia</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // ============================================
+        // CHILDHOOD HOMELESSNESS MORTALITY CALCULATOR
+        // Multi-Pathway Mortality Model
+        // ============================================
+
+        const MODEL_PARAMS = {
+            // Central estimate: 169 deaths/year (2024 baseline)
+            baseEstimate: 169,
+            
+            // 95% Confidence Interval
+            lowerBound: 89,
+            upperBound: 251,
+            
+            // Population data (ABS estimates)
+            childPopulation: {
+                2020: 5720000,
+                2021: 5750000,
+                2022: 5780000,
+                2023: 5810000,
+                2024: 5840000,
+                2025: 5870000,
+                2026: 5900000
+            },
+            
+            // Housing crisis adjustment factors (cumulative from 2020 baseline)
+            // Accounts for worsening affordability, increased rough sleeping, service demand
+            housingCrisisMultiplier: {
+                2020: 0.92,  // Pre-COVID baseline was slightly lower
+                2021: 0.95,  // COVID protections in place
+                2022: 1.00,  // Baseline year for model
+                2023: 1.04,  // Protections ended, crisis intensifying
+                2024: 1.08,  // AIHW reports 63% increase in SHS deaths over decade
+                2025: 1.12,  // Continued deterioration
+                2026: 1.15   // Projected continuation of trend
+            },
+            
+            // Pathway breakdown (as proportion of total)
+            pathways: {
+                visibleLinkageAdjusted: 0.31,    // 52/169
+                adolescentSuicideOD: 0.34,       // 57/169
+                sudiHidden: 0.10,                 // 17/169
+                accidentIllness: 0.15,            // 25/169
+                fdvRelated: 0.06,                 // 10/169
+                unlinked: 0.05                    // 8/169
+            }
+        };
+
+        // Calculate deaths for a specific year
+        function calculateYearlyDeaths(year) {
+            const basePop = MODEL_PARAMS.childPopulation[2024];
+            const yearPop = MODEL_PARAMS.childPopulation[year] || basePop;
+            const popFactor = yearPop / basePop;
+            const crisisFactor = MODEL_PARAMS.housingCrisisMultiplier[year] || 1.0;
+            
+            const central = Math.round(MODEL_PARAMS.baseEstimate * popFactor * crisisFactor);
+            const lower = Math.round(MODEL_PARAMS.lowerBound * popFactor * crisisFactor);
+            const upper = Math.round(MODEL_PARAMS.upperBound * popFactor * crisisFactor);
+            const rate = ((central / yearPop) * 100000).toFixed(1);
+            
+            return { central, lower, upper, population: yearPop, rate };
+        }
+
+        // Calculate deaths so far this year (pro-rated)
+        function calculateYearToDate(year) {
+            const now = new Date();
+            const startOfYear = new Date(year, 0, 1);
+            const endOfYear = new Date(year + 1, 0, 1);
+            
+            const totalDays = (endOfYear - startOfYear) / (1000 * 60 * 60 * 24);
+            const daysPassed = (now - startOfYear) / (1000 * 60 * 60 * 24);
+            const fractionOfYear = Math.max(0, Math.min(1, daysPassed / totalDays));
+            
+            const yearData = calculateYearlyDeaths(year);
+            
+            // Add time-of-day precision
+            const deathsPerSecond = yearData.central / (365.25 * 24 * 60 * 60);
+            const secondsPassed = (now - startOfYear) / 1000;
+            const preciseDeaths = secondsPassed * deathsPerSecond;
+            
+            return {
+                ytd: preciseDeaths,
+                projected: yearData.central,
+                fractionComplete: fractionOfYear
+            };
+        }
+
+        // Update the live counter
+        function updateLiveCounter() {
+            const currentYear = new Date().getFullYear();
+            const data = calculateYearToDate(currentYear);
+            
+            const whole = Math.floor(data.ytd);
+            const decimal = (data.ytd - whole).toFixed(2).substring(1); // Gets ".XX"
+            
+            document.getElementById('liveCounter').innerHTML = 
+                `${whole}<span class="counter-decimal" id="decimal">${decimal}</span>`;
+        }
+
+        // Populate the yearly table
+        function populateYearlyTable() {
+            const years = [2020, 2021, 2022, 2023, 2024, 2025, 2026];
+            const currentYear = new Date().getFullYear();
+            const tbody = document.getElementById('yearlyTable');
+            
+            years.forEach(year => {
+                const data = calculateYearlyDeaths(year);
+                const isCurrent = year === currentYear;
+                const isFuture = year > currentYear;
+                
+                const row = document.createElement('tr');
+                if (isCurrent) row.classList.add('current-year');
+                
+                row.innerHTML = `
+                    <td class="year-cell">
+                        ${year}
+                        ${isCurrent ? '<span class="current-badge">Current</span>' : ''}
+                        ${isFuture ? '<span class="current-badge" style="background: var(--accent-amber)">Projected</span>' : ''}
+                    </td>
+                    <td class="estimate-cell">${data.central}</td>
+                    <td class="range-cell">${data.lower} – ${data.upper}</td>
+                    <td>${(data.population / 1000000).toFixed(2)}M</td>
+                    <td>${data.rate}</td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            populateYearlyTable();
+            updateLiveCounter();
+            
+            // Update counter every second for smooth animation
+            setInterval(updateLiveCounter, 1000);
+        });
+
+        // Expose calculation function for external use
+        window.HomelessnessDeathsModel = {
+            calculateYearlyDeaths,
+            calculateYearToDate,
+            params: MODEL_PARAMS
+        };
+    </script>
+</body>
+</html>
