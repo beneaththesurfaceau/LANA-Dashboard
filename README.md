@@ -27,7 +27,7 @@ The implementation consists of:
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/beneaththesurfaceau/LANA-Dashboard.git
 cd LANA-Dashboard
 
 # Open in browser (no build process required)
