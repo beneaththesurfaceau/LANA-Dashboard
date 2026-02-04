@@ -1,68 +1,112 @@
-1. Project Overview
-This project provides a real-time statistical implementation of the LANA Methodology. It is designed to expose the "invisible" mortality rate of childhood homelessness in Australia, where official administrative data linkage is estimated to capture only 23–30% of actual deaths.
+# LANA Dashboard
+
+![License: LANA v1.4](https://img.shields.io/badge/License-LANA%20v1.4-blue)
+![No Dependencies](https://img.shields.io/badge/Dependencies-None-green)
+
+A real-time statistical implementation of the LANA Methodology, exposing the invisible mortality rate of childhood homelessness in Australia.
+
+## Overview
+
+This project addresses the systematic undercount of homeless child deaths in Australia, where official administrative data linkage captures only 23–30% of actual deaths.
 
 The implementation consists of:
 
-A Mortality Tracker: A reactive web interface (dashboard.html) for real-time visualization of estimated deaths.
+- **Mortality Tracker** - A reactive web interface (`dashboard.html`) for real-time visualization of estimated deaths
+- **Research Framework** - A detailed multi-pathway mortality model (`methodology.md`)
+- **Memorial License** - A legal framework (v1.4) ensuring all derivative works remain anonymized and memorial-focused
 
-The Research Framework: A detailed multi-pathway mortality model (methodology.md).
+## Features
 
-The Memorial License: A legal framework (v1.4) ensuring all derivative works remain anonymized and memorial-focused.
+- Real-time death counter with per-second precision
+- Multi-pathway mortality model aggregating six risk pathways
+- Year-by-year projections with housing crisis adjustments
+- Fully client-side calculations (no backend required)
+- Zero external dependencies
 
-2. The LANA Methodology
+## Quick Start
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd LANA-Dashboard
+
+# Open in browser (no build process required)
+open dashboard.html
+# or on Windows:
+start dashboard.html
+```
+
+No installation, build tools, or dependencies required. Simply open `dashboard.html` in any modern browser.
+
+## The LANA Methodology
+
 The methodology addresses the systematic undercount of homeless child deaths, which often go unrecorded in mortality registries or coronial records.
 
-The Multi-Pathway Model
+### Multi-Pathway Model
+
 Total deaths are calculated by aggregating six specific risk pathways:
 
-Visible Deaths: SHS-connected deaths adjusted for a ~79% data linkage success rate.
+| Pathway | Description |
+|---------|-------------|
+| **Visible Deaths** | SHS-connected deaths adjusted for ~79% data linkage success rate |
+| **SUDI** | Sudden Unexpected Death in Infancy attributable to severe overcrowding |
+| **Adolescent Suicide/OD** | Hidden homeless youth (12–17) with 6.0× risk multiplier |
+| **FDV-Related** | Deaths where housing barriers prevented escape from domestic violence |
+| **Accident/Illness** | Children (1–11) in hidden homelessness with reduced healthcare access |
+| **Unlinked Deaths** | Mortality occurring >12 months after last service contact |
 
-SUDI: Sudden Unexpected Death in Infancy attributable to severe overcrowding.
+## Modification Guide
 
-Adolescent Suicide/OD: Hidden homeless youth (12–17) experiencing a 6.0× risk multiplier compared to housed peers.
+The project is built using vanilla HTML5, CSS3, and JavaScript for maximum portability and ease of audit.
 
-FDV-Related: Deaths where housing barriers prevented escape from domestic violence.
+### Model Parameters
 
-Accident/Illness: Children (1–11) in hidden homelessness with reduced healthcare access.
+All mathematical logic is encapsulated in the `MODEL_PARAMS` object within `dashboard.html`. Modify these values to reflect localized or updated research:
 
-Unlinked Deaths: Mortality occurring more than 12 months after the last service contact.
-
-3. Developer Guide: Modification & Code Logic
-The project is built using vanilla HTML5, CSS3, and JavaScript to ensure maximum portability and ease of audit.
-
-Modifying the Mortality Logic
-All mathematical logic is encapsulated in the MODEL_PARAMS object within dashboard.html. Developers should modify these values to reflect localized or updated research:
-
-JavaScript
+```javascript
 const MODEL_PARAMS = {
-    baseEstimate: 169, // The central annualized death estimate
+    baseEstimate: 169, // Central annualized death estimate
     lowerBound: 89,    // 95% Confidence Interval (Lower)
     upperBound: 251,   // 95% Confidence Interval (Upper)
-    
+
     // Housing crisis multipliers adjust for worsening economic conditions
     housingCrisisMultiplier: {
         2024: 1.08,
         2025: 1.12,
-        2026: 1.15 
+        2026: 1.15
     }
 };
-The Live Counter (updateLiveCounter)
-The tracker calculates deaths-to-date with per-second precision using the following logic:
+```
 
-Pro-rating: It determines the number of seconds passed in the current year.
+### Live Counter Logic
 
-Frequency: It calculates a deathsPerSecond value based on the annualized central estimate.
+The tracker calculates deaths-to-date with per-second precision:
 
-Injection: The updateLiveCounter() function is called via setInterval every 1000ms to update the DOM without page refreshes.
+1. **Pro-rating** - Determines seconds passed in the current year
+2. **Frequency** - Calculates `deathsPerSecond` from the annualized estimate
+3. **Injection** - `updateLiveCounter()` is called via `setInterval` every 1000ms
 
-4. Branding & Compliance (LANA License v1.4)
-This project is governed by a Share-Alike reciprocity clause; any modifications must be re-released under the same LANA License.
+## Documentation
 
-The Structural Exception for Developers
-To allow for easier integration into existing organizational websites, version 1.4 permits limited branding:
+- [Methodology](methodology.md) - Detailed research framework and data sources
+- [User Guide](USERGUIDE.md) - Implementation and customization guide
+- [License](LICENSE.md) - LANA License v1.4 full terms
 
-Permitted Branding: You may place your organization’s logo and name in the site-wide header and footer only.
+## License
 
-Prohibited Branding: No individual names, researcher bios, or sponsor "shout-outs" may appear in the "About" section, page content, or promotional graphics.
+This project is governed by the **LANA License v1.4** - a share-alike license with memorial-focused requirements.
 
-Neutral Attribution: All projects must include the credit: "Derived from the LANA Methodology (https://www.beneaththesurface.au/lana-methodology)". No mention of "Beneath the Surface AU" is permitted in the public-facing attribution.
+See [LICENSE.md](LICENSE.md) for full terms.
+
+### Branding Rules
+
+| Permitted | Prohibited |
+|-----------|------------|
+| Organization logo/name in header and footer | Individual names or researcher bios in content |
+| Neutral attribution link | Sponsor "shout-outs" in About section |
+
+## Attribution
+
+All projects must include:
+
+> Derived from the LANA Methodology (https://www.beneaththesurface.au/lana-methodology)
