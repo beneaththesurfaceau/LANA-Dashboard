@@ -2,7 +2,37 @@
 
 ## A Multi-Pathway Mortality Model for Quantifying Hidden Deaths Among Housing-Insecure Children
 
-**Research Report | January 2026 | Version 1.0**
+![Version](https://img.shields.io/badge/Version-1.0-blue)
+![Status](https://img.shields.io/badge/Status-Research-yellow)
+![Date](https://img.shields.io/badge/January-2026-lightgrey)
+
+[← Back to Dashboard](dashboard.html)
+
+---
+
+## Table of Contents
+
+- [Key Finding](#key-finding)
+- [1. Introduction](#1-introduction)
+  - [1.1 The Problem of Invisible Deaths](#11-the-problem-of-invisible-deaths)
+  - [1.2 Purpose of This Model](#12-purpose-of-this-model)
+  - [1.3 Scope and Definitions](#13-scope-and-definitions)
+- [2. Methodology](#2-methodology)
+  - [2.1 Conceptual Framework](#21-conceptual-framework)
+  - [2.2 Data Sources](#22-data-sources)
+  - [2.3 Establishing the Visible Baseline](#23-establishing-the-visible-baseline)
+  - [2.4 Estimating the Hidden Homeless Child Population](#24-estimating-the-hidden-homeless-child-population)
+  - [2.5 Age-Stratified Risk Multipliers](#25-age-stratified-risk-multipliers)
+- [3. The Multi-Pathway Mortality Model](#3-the-multi-pathway-mortality-model)
+  - [3.1 Model Structure](#31-model-structure)
+  - [3.2 Formal Expression](#32-formal-expression)
+  - [3.3 Pathway Calculations](#33-pathway-calculations)
+  - [3.4 Total Estimate](#34-total-estimate)
+  - [3.5 Sensitivity Analysis](#35-sensitivity-analysis)
+  - [3.6 Simplified Formula](#36-simplified-formula-for-ongoing-monitoring)
+- [4. Model Validation](#4-model-validation)
+- [5. Limitations and Caveats](#5-limitations-and-caveats)
+- [6. Data Sources and References](#6-data-sources-and-references)
 
 ---
 
@@ -403,4 +433,4 @@ Despite these limitations, the fundamental finding—that official statistics ca
 
 ---
 
-*[Return to Live Dashboard](dashboard.html)*
+[↑ Back to Top](#estimating-childhood-homelessness-deaths-in-australia) | [← Return to Dashboard](dashboard.html)
