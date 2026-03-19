@@ -1,9 +1,9 @@
 # LANA Dashboard User Guide
 
-**Version 1.4**
+**Version 2.0**
 
 ![Type](https://img.shields.io/badge/Type-User%20Guide-green)
-![License](https://img.shields.io/badge/License-LANA%20v1.4-blue)
+![License](https://img.shields.io/badge/License-LANA%20v2.0-blue)
 
 [← Back to README](README.md) | [View Dashboard](dashboard.html) | [Methodology](methodology.md)
 
@@ -29,7 +29,7 @@ This guide provides the instructions necessary to implement, modify, and maintai
 
 The LANA Project operates under a "Memorial-First" framework. In a digital landscape often dominated by "social responsibility" branding, this methodology mandates a return to pure focus on the victims.
 
-### LANA License (v1.4) Compliance
+### LANA License (v2.0) Compliance
 
 Any developer or organization using this code must adhere to these strict legal conditions:
 
@@ -48,18 +48,20 @@ See [LICENSE.md](LICENSE.md) for full legal terms.
 
 The core of this project is a **Multi-Pathway Mortality Model**. Research suggests that official administrative data linkage only captures about 23% of child deaths attributable to homelessness.
 
-### The Six Pathways of Mortality
+### The Eight Pathways of Mortality (v2.0)
 
-The model estimates the "True Toll" by calculating risk across these distinct areas:
+The model estimates the "True Toll" by calculating risk across these distinct areas, with an inter-pathway overlap adjustment and temporal trend correction:
 
-| Pathway | Description |
-|---------|-------------|
-| **Visible (Linkage-Adjusted)** | SHS-connected deaths, adjusted for ~79% linkage success rate |
-| **SUDI in Hidden Homelessness** | Infant deaths (0-1) in overcrowded or unstable housing |
-| **Adolescent Suicide/Overdose** | 6.0× mortality multiplier for hidden homeless youth (12-17) |
-| **Accident/Illness** | Deaths of hidden homeless children (1-11) from reduced healthcare access |
-| **FDV-Related** | Deaths where lack of housing prevented escape from domestic violence |
-| **Unlinked Post-Support** | Deaths occurring >12 months after last service contact |
+| Pathway | Deaths/Year | Description |
+|---------|-------------|-------------|
+| **Visible (Coverage-Adjusted)** | 50 | SHS-connected deaths, adjusted for linkage and coverage gaps |
+| **Adolescent Suicide/Overdose** | 22 | 4.5× mortality multiplier for hidden homeless youth (12–17) |
+| **SUDI in Housing-Insecure Infants** | 20 | Housing-attributable infant deaths via population attributable fraction |
+| **Accident/Illness** | 14 | Excess deaths of hidden homeless children (1–11) from reduced healthcare access |
+| **Neonatal/Perinatal** | 8 | Neonatal deaths attributable to maternal housing insecurity during pregnancy |
+| **Temporally Unlinked** | 8 | Deaths occurring >12 months after last service contact |
+| **FDV-Related** | 6 | Housing-preventable DFV-context filicides |
+| **Child Protection Interface** | 4 | Deaths in out-of-home care where housing drove family separation |
 
 See [methodology.md](methodology.md) for detailed calculations and data sources.
 
@@ -75,7 +77,8 @@ All statistical assumptions are contained within a single JSON-like object at th
 
 | Parameter | Description |
 |-----------|-------------|
-| `baseEstimate` | The central annual death count (default: 169) |
+| `baseEstimate` | The central annual death count (default: 155, v2.0) |
+| `lowerBound` / `upperBound` | 95% plausible range (136–181) |
 | `housingCrisisMultiplier` | Year-by-year factor adjusting for the intensifying housing crisis |
 | `childPopulation` | ABS-based estimates for calculating mortality rate per 100,000 children |
 

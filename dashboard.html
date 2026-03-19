@@ -569,8 +569,8 @@
                 <div class="counter-label">Estimated Deaths This Year (2026)</div>
                 <div class="counter-value" id="liveCounter">0<span class="counter-decimal" id="decimal">.00</span></div>
                 <div class="counter-context">
-                    Based on <strong>169 deaths/year</strong> central estimate &bull; Updated every second<br>
-                    <span class="tooltip" data-tooltip="95% confidence interval based on sensitivity analysis">Range: 89 – 251 deaths/year</span>
+                    Based on <strong>155 deaths/year</strong> central estimate &bull; Updated every second<br>
+                    <span class="tooltip" data-tooltip="95% plausible range based on sensitivity analysis">Range: 136 – 181 deaths/year</span>
                 </div>
             </div>
         </section>
@@ -580,20 +580,20 @@
             <div class="stat-card fade-in">
                 <div class="stat-icon red">📊</div>
                 <div class="stat-label">Official Count (AIHW)</div>
-                <div class="stat-value">~39</div>
+                <div class="stat-value">~35</div>
                 <div class="stat-change">deaths/year linked to SHS</div>
             </div>
             <div class="stat-card fade-in">
                 <div class="stat-icon amber">⚠️</div>
                 <div class="stat-label">Undercount Factor</div>
-                <div class="stat-value">4.3×</div>
-                <div class="stat-change">official data captures only 23%</div>
+                <div class="stat-value">~4.0×</div>
+                <div class="stat-change">official data captures only ~25%</div>
             </div>
             <div class="stat-card fade-in">
                 <div class="stat-icon blue">👶</div>
                 <div class="stat-label">Hidden Homeless Children</div>
-                <div class="stat-value">~147K</div>
-                <div class="stat-change">2.5% of Australian children</div>
+                <div class="stat-value">~132K</div>
+                <div class="stat-change">2.3% of Australian children</div>
             </div>
         </section>
 
@@ -628,74 +628,74 @@
             <div class="section-header">
                 <div>
                     <h2 class="section-title">Deaths by Pathway (2026 Estimate)</h2>
-                    <p class="section-subtitle">Multi-pathway mortality model breakdown</p>
+                    <p class="section-subtitle">Multi-pathway mortality model v2.0 breakdown &bull; Includes overlap adjustment (−6) and temporal trend (+29)</p>
                 </div>
             </div>
             <div class="breakdown-grid">
                 <div class="breakdown-card fade-in">
                     <div class="breakdown-header">
                         <div>
-                            <div class="breakdown-title">Visible (Linkage-Adjusted)</div>
-                            <div class="breakdown-subtitle">SHS-connected deaths with data linkage correction</div>
+                            <div class="breakdown-title">Visible (Coverage &amp; Linkage-Adjusted)</div>
+                            <div class="breakdown-subtitle">SHS-connected deaths with linkage and coverage correction</div>
                         </div>
-                        <div class="breakdown-value">52</div>
+                        <div class="breakdown-value">50</div>
                     </div>
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: 31%;"></div>
+                        <div class="progress-fill" style="width: 32%;"></div>
                     </div>
                 </div>
                 <div class="breakdown-card fade-in">
                     <div class="breakdown-header">
                         <div>
                             <div class="breakdown-title">Adolescent Suicide/Overdose</div>
-                            <div class="breakdown-subtitle">Hidden homeless youth (12-17) without service contact</div>
+                            <div class="breakdown-subtitle">Hidden homeless youth (12–17) without service contact</div>
                         </div>
-                        <div class="breakdown-value">57</div>
+                        <div class="breakdown-value">22</div>
                     </div>
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: 34%;"></div>
+                        <div class="progress-fill" style="width: 14%;"></div>
                     </div>
                 </div>
                 <div class="breakdown-card fade-in">
                     <div class="breakdown-header">
                         <div>
-                            <div class="breakdown-title">SUDI in Hidden Homeless</div>
-                            <div class="breakdown-subtitle">Infant deaths in overcrowded/unstable housing</div>
+                            <div class="breakdown-title">SUDI in Housing-Insecure Infants</div>
+                            <div class="breakdown-subtitle">Infant deaths attributable to housing via PAF method</div>
                         </div>
-                        <div class="breakdown-value">17</div>
+                        <div class="breakdown-value">20</div>
                     </div>
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: 10%;"></div>
+                        <div class="progress-fill" style="width: 13%;"></div>
                     </div>
                 </div>
                 <div class="breakdown-card fade-in">
                     <div class="breakdown-header">
                         <div>
-                            <div class="breakdown-title">Accident/Illness (1-11 Hidden)</div>
-                            <div class="breakdown-subtitle">Children in hidden homelessness lacking healthcare</div>
+                            <div class="breakdown-title">Accident/Illness (Hidden 1–11)</div>
+                            <div class="breakdown-subtitle">Excess deaths in hidden homeless children lacking healthcare</div>
                         </div>
-                        <div class="breakdown-value">25</div>
+                        <div class="breakdown-value">14</div>
                     </div>
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: 15%;"></div>
+                        <div class="progress-fill" style="width: 9%;"></div>
                     </div>
                 </div>
                 <div class="breakdown-card fade-in">
                     <div class="breakdown-header">
                         <div>
-                            <div class="breakdown-title">FDV-Related Deaths</div>
-                            <div class="breakdown-subtitle">Children killed where housing barriers prevented escape</div>
+                            <div class="breakdown-title">Neonatal/Perinatal</div>
+                            <div class="breakdown-subtitle">Neonatal deaths attributable to maternal housing insecurity</div>
                         </div>
-                        <div class="breakdown-value">10</div>
+                        <div class="breakdown-value">8</div>
                     </div>
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: 6%;"></div>
+                        <div class="progress-fill" style="width: 5%;"></div>
                     </div>
                 </div>
                 <div class="breakdown-card fade-in">
                     <div class="breakdown-header">
                         <div>
-                            <div class="breakdown-title">Unlinked Deaths</div>
+                            <div class="breakdown-title">Temporally Unlinked Deaths</div>
                             <div class="breakdown-subtitle">Deaths occurring &gt;12 months after last SHS contact</div>
                         </div>
                         <div class="breakdown-value">8</div>
@@ -704,13 +704,37 @@
                         <div class="progress-fill" style="width: 5%;"></div>
                     </div>
                 </div>
+                <div class="breakdown-card fade-in">
+                    <div class="breakdown-header">
+                        <div>
+                            <div class="breakdown-title">FDV-Related Deaths</div>
+                            <div class="breakdown-subtitle">Housing-preventable DFV-context filicides</div>
+                        </div>
+                        <div class="breakdown-value">6</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 4%;"></div>
+                    </div>
+                </div>
+                <div class="breakdown-card fade-in">
+                    <div class="breakdown-header">
+                        <div>
+                            <div class="breakdown-title">Child Protection Interface</div>
+                            <div class="breakdown-subtitle">Deaths in OOHC where housing drove family separation</div>
+                        </div>
+                        <div class="breakdown-value">4</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 3%;"></div>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- Methodology Link -->
         <section class="methodology-link">
             <h3>Understanding the Methodology</h3>
-            <p>Our multi-pathway mortality model is based on AIHW data, academic research, and actuarial risk estimation methods.</p>
+            <p>Our multi-pathway mortality model (v2.0) is based on AIHW data, academic research, and population-attributable-fraction estimation methods.</p>
             <a href="methodology.html" class="btn">
                 Read Full Methodology Report
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -738,17 +762,17 @@
     <script>
         // ============================================
         // CHILDHOOD HOMELESSNESS MORTALITY CALCULATOR
-        // Multi-Pathway Mortality Model
+        // Multi-Pathway Mortality Model v2.0
         // ============================================
 
         const MODEL_PARAMS = {
-            // Central estimate: 169 deaths/year (2024 baseline)
-            baseEstimate: 169,
-            
-            // 95% Confidence Interval
-            lowerBound: 89,
-            upperBound: 251,
-            
+            // Central estimate: 155 deaths/year (v2.0, March 2026)
+            baseEstimate: 155,
+
+            // 95% Plausible Range
+            lowerBound: 136,
+            upperBound: 181,
+
             // Population data (ABS estimates)
             childPopulation: {
                 2020: 5720000,
@@ -759,8 +783,8 @@
                 2025: 5870000,
                 2026: 5900000
             },
-            
-            // Housing crisis adjustment factors (cumulative from 2020 baseline)
+
+            // Housing crisis adjustment factors (cumulative from 2022 baseline)
             // Accounts for worsening affordability, increased rough sleeping, service demand
             housingCrisisMultiplier: {
                 2020: 0.92,  // Pre-COVID baseline was slightly lower
@@ -771,15 +795,18 @@
                 2025: 1.12,  // Continued deterioration
                 2026: 1.15   // Projected continuation of trend
             },
-            
-            // Pathway breakdown (as proportion of total)
+
+            // Pathway breakdown (as proportion of total, v2.0)
+            // Pathway sum (132) + overlap adjustment (-6) + temporal trend (+29) = 155
             pathways: {
-                visibleLinkageAdjusted: 0.31,    // 52/169
-                adolescentSuicideOD: 0.34,       // 57/169
-                sudiHidden: 0.10,                 // 17/169
-                accidentIllness: 0.15,            // 25/169
-                fdvRelated: 0.06,                 // 10/169
-                unlinked: 0.05                    // 8/169
+                visibleCoverageAdjusted: 0.32,   // 50/155
+                adolescentSuicideOD: 0.14,       // 22/155
+                sudiHousingInsecure: 0.13,       // 20/155
+                accidentIllnessExcess: 0.09,     // 14/155
+                neonatalPerinatal: 0.05,         // 8/155
+                temporallyUnlinked: 0.05,        // 8/155
+                fdvRelated: 0.04,                // 6/155
+                childProtectionInterface: 0.03   // 4/155
             }
         };
 

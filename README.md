@@ -1,6 +1,6 @@
 # LANA Dashboard
 
-![License: LANA v1.4](https://img.shields.io/badge/License-LANA%20v1.4-blue)
+![License: LANA v2.0](https://img.shields.io/badge/License-LANA%20v2.0-blue)
 ![No Dependencies](https://img.shields.io/badge/Dependencies-None-green)
 
 A real-time statistical implementation of the LANA Methodology, exposing the invisible mortality rate of childhood homelessness in Australia.
@@ -13,12 +13,12 @@ The implementation consists of:
 
 - **Mortality Tracker** - A reactive web interface (`dashboard.html`) for real-time visualization of estimated deaths
 - **Research Framework** - A detailed multi-pathway mortality model (`methodology.md`)
-- **Memorial License** - A legal framework (v1.4) ensuring all derivative works remain anonymized and memorial-focused
+- **Memorial License** - A legal framework (v2.0) ensuring all derivative works remain anonymized and memorial-focused
 
 ## Features
 
 - Real-time death counter with per-second precision
-- Multi-pathway mortality model aggregating six risk pathways
+- Multi-pathway mortality model (v2.0) aggregating eight risk pathways
 - Year-by-year projections with housing crisis adjustments
 - Fully client-side calculations (no backend required)
 - Zero external dependencies
@@ -42,18 +42,20 @@ No installation, build tools, or dependencies required. Simply open `dashboard.h
 
 The methodology addresses the systematic undercount of homeless child deaths, which often go unrecorded in mortality registries or coronial records.
 
-### Multi-Pathway Model
+### Multi-Pathway Model (v2.0)
 
-Total deaths are calculated by aggregating six specific risk pathways:
+Total deaths are calculated by aggregating eight specific risk pathways, with an inter-pathway overlap adjustment and temporal trend correction:
 
-| Pathway | Description |
-|---------|-------------|
-| **Visible Deaths** | SHS-connected deaths adjusted for ~79% data linkage success rate |
-| **SUDI** | Sudden Unexpected Death in Infancy attributable to severe overcrowding |
-| **Adolescent Suicide/OD** | Hidden homeless youth (12–17) with 6.0× risk multiplier |
-| **FDV-Related** | Deaths where housing barriers prevented escape from domestic violence |
-| **Accident/Illness** | Children (1–11) in hidden homelessness with reduced healthcare access |
-| **Unlinked Deaths** | Mortality occurring >12 months after last service contact |
+| Pathway | Deaths/Year | Description |
+|---------|-------------|-------------|
+| **Visible (Coverage-Adjusted)** | 50 | SHS-connected deaths adjusted for linkage and coverage gaps |
+| **Adolescent Suicide/OD** | 22 | Hidden homeless youth (12–17) with 4.5× risk multiplier |
+| **SUDI** | 20 | Housing-attributable infant deaths via population attributable fraction |
+| **Accident/Illness** | 14 | Excess deaths in hidden homeless children (1–11) |
+| **Neonatal/Perinatal** | 8 | Neonatal deaths attributable to maternal housing insecurity |
+| **Temporally Unlinked** | 8 | Deaths occurring >12 months after last SHS contact |
+| **FDV-Related** | 6 | Housing-preventable DFV-context filicides |
+| **Child Protection Interface** | 4 | Deaths in OOHC where housing drove family separation |
 
 ## Modification Guide
 
@@ -65,9 +67,9 @@ All mathematical logic is encapsulated in the `MODEL_PARAMS` object within `dash
 
 ```javascript
 const MODEL_PARAMS = {
-    baseEstimate: 169, // Central annualized death estimate
-    lowerBound: 89,    // 95% Confidence Interval (Lower)
-    upperBound: 251,   // 95% Confidence Interval (Upper)
+    baseEstimate: 155, // Central annualized death estimate (v2.0)
+    lowerBound: 136,   // 95% Plausible Range (Lower)
+    upperBound: 181,   // 95% Plausible Range (Upper)
 
     // Housing crisis multipliers adjust for worsening economic conditions
     housingCrisisMultiplier: {
@@ -90,11 +92,11 @@ The tracker calculates deaths-to-date with per-second precision:
 
 - [Methodology](methodology.md) - Detailed research framework and data sources
 - [User Guide](USERGUIDE.md) - Implementation and customization guide
-- [License](LICENSE.md) - LANA License v1.4 full terms
+- [License](LICENSE.md) - LANA License v2.0 full terms
 
 ## License
 
-This project is governed by the **LANA License v1.4** - a share-alike license with memorial-focused requirements.
+This project is governed by the **LANA License v2.0** - a share-alike license with memorial-focused requirements.
 
 See [LICENSE.md](LICENSE.md) for full terms.
 
